@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create or Edit Item</title>
+
+  <link rel="stylesheet" href="styles/css/style.css">
+</head>
+<body>
+  <nav class="navbar">Task Manager</nav>
+  <section class="form-section">
+    <h2>Create or Edit Item</h2>
+    <form id="edit-form">
+      <div class="input-section">
+        <label for="name">Name:</label>
+        <input type="text" maxlength="20" id="name" name="name" class="text-input" placeholder="Task Name" autocomplete="off">
+      </div>
+      <div class="input-section">
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" cols="29" rows="3" maxlength="90" placeholder="Task Description"></textarea>
+      </div>
+      <div class="input-section">
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" class="text-input" placeholder="Task Description" autocomplete="off">
+      </div>
+    </form>
+    <button type="submit" form="edit-form" id="submit-btn">Submit</button>
+  </section>
+</body>
+</html>
