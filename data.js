@@ -9,14 +9,14 @@ const tasks = [
   {
     name: 'Eat Lunch',
     time: '12:30',
-    description: 'Going out to get lunch with friends',
+    description: 'Going out to get lunch with friends.',
     completed: false,
     id: 2
   },
   {
     name: 'Eat Dinner',
     time: '6:30',
-    description: 'Eat a microwave dinner with your cat',
+    description: 'Eat a microwave with your cat.',
     completed: false,
     id: 3
   }

@@ -277,6 +277,7 @@ h4 {
   margin: 0.25rem;
 }
 .form-section form .text-input, .form-section form textarea {
+  resize: none;
   border: 2px solid #888888;
   color: #505050;
   border-radius: 0.25rem;
@@ -303,4 +304,27 @@ h4 {
   border-radius: 0.25rem;
   width: 10rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#filter-label {
+  margin-right: 0.5rem;
+}
+
+select {
+  border: black solid 1px;
+  background-color: white;
+}
+
+.result-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+}
+
+.result {
+  width: 80%;
+  display: flex;
+  padding: 3rem;
+  background-color: white;
+  border-radius: 0.25rem;
 }/*# sourceMappingURL=style.css.map */
