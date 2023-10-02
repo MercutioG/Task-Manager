@@ -1,57 +1,57 @@
 let {tasks} = require('../data')
 console.log(tasks)
 
-//Get function for all people
+//Get function for all tasks
 const readTask = (req, res) => {
   res.json({success: true, data: tasks})
 }
 
-//Post function for creating people
+//Post function for creating tasks
 const createTask = (req, res) => {
   console.log(req.body)
   const {name} = req.body
   if(!name){
     return res.status(400).json({data:[], success: false, msg:'Mising Details'})
   }
-  let person = {id: length++, name:name}
-  tasks.push(person)
+  let task = {id: length++, name:name}
+  tasks.push(task)
   res.status(201).json({success: true, data: [tasks]})
 }
 
-// //PUT function for updating people
-// let length = people.length + 1
+// //PUT function for updating tasks
+// let length = tasks.length + 1
 // const updateTask = (req, res) => {
 //   const {id} = req.params;
 //   const {name} = req.body;
-//   const person = people.find((person) => person.id === Number(id))
+//   const task = tasks.find((task) => task.id === Number(id))
 
-//   if(!person){
+//   if(!task){
 //     return res.json({success: false, data:[]})
 //   }
 
-//   const newTask = people.map((person) => {
-//     if(person.id === Number(id)){
-//       person.name = name;
+//   const newTask = tasks.map((task) => {
+//     if(task.id === Number(id)){
+//       task.name = name;
 //     }
-//     return person;
+//     return task;
 //   })
 //   res.status(202).json({data: newTask, success: true})
 // }
 
-// //DELETE function for delete people
-// const deleteTask = (req, res) => {
-//   const {id} = req.params
-//   const task = people.find((task) => task.id === Number(id))
+//DELETE function for delete tasks
+const deleteTask = (req, res) => {
+  const {id} = req.params
+  const task = tasks.find((task) => task.id === Number(id))
   
-//   if(!task){
-//     return res.status(404).json({success: false, msg: 'No person found'})
-//   }
+  if(!task){
+    return res.status(404).json({success: false, msg: 'No task found'})
+  }
 
-//   people = people.filter((person) => {
-//     return person.id !== Number(id)
-//   })
-//   res.status(202).json({data: people, success: true})
-// }
+  tasks = tasks.filter((task) => {
+    return task.id !== Number(id)
+  })
+  res.status(202).json({data: tasks, success: true})
+}
 
 // module.exports = {createTask, readTask, updateTask, deleteTask}
-module.exports = {createTask, readTask}
+module.exports = {readTask, deleteTask}
