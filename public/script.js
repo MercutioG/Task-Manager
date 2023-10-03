@@ -1,17 +1,30 @@
 //HTML
-const btn = document.querySelector('.submit-btn')
-const input = document.querySelector('.form-input')
+const btn = document.querySelector('#submit-btn')
+const inputName = document.querySelector('#name')
+const inputDescription = document.querySelector('#description')
+const inputTime = document.querySelector('#time')
 const formAlert = document.querySelector('.form-alert')
 const result = document.querySelector('.result');
-var editmode = false;
 
 const fetchTasks = async() => {
   try {
-    const {data} = await axios.get('/api/tasks')
-    console.log(data)
+    const {data} = (await axios.get('/api/tasks'))
+    console.log(data) 
 
     const tasks = data.data.map((task) => {
-      return `<div class="task-item" id="task-${task.id}"><div><input onclick="changeColor(${task.id})" type="checkbox" class="completed-checkbox" id="checkbox-${task.id}" name="completed${task.id}"><label for="completed${task.id}">Complete?</label></div><h3>${task.name}</h3><h5>${task.description}</h5><h5>- ${task.time}</h5><div><button onclick="deleteItem(${task.id})">Delete</button></div></div>`
+      return `<div class="task-item" id="task-${task.id}">
+        <div>
+          <input onclick="changeColor(${task.id})" type="checkbox" class="completed-checkbox" id="checkbox-${task.id}" name="completed${task.id}">
+          <label for="completed${task.id}">Complete?</label>
+        </div>
+        <h3>${task.name}</h3>
+        <h5>${task.description}</h5>
+        <h5>- ${task.time}</h5>
+        <div>
+          <button onclick="editPage(${task.id})">Edit*</button>
+          <button onclick="deleteItem(${task.id})">Delete</button>
+        </div>
+      </div>`
     })
     result.innerHTML = tasks.join('')
   } catch (err) {
@@ -20,6 +33,11 @@ const fetchTasks = async() => {
   }
 }
 fetchTasks()
+
+function editPage(taskID){
+  sessionStorage.setItem('taskNumber', taskID);
+  location.href='./create-panel.html'
+}
 
 function changeColor(checkValue) {
   if(document.getElementById(`checkbox-${checkValue}`).checked){
@@ -31,37 +49,36 @@ function changeColor(checkValue) {
 
 btn.addEventListener('click', async (e) => {
   e.preventDefault()
-  const nameValue = input.value
+  const [nameValue, descriptionValue, timeValue] = [inputName, inputDescription, inputTime]
 
   try {
-    if(!editmode){
-      const {data} = await axios.post('/api/people', {name: nameValue})
+    if(sessionStorage.getItem('taskNumber') === -1){
+      const {data} = await axios.post('/api/tasks', {name: nameValue, description: descriptionValue, time: timeValue})
       const h5 = document.createElement('h5')
-      h5.textContent = data.person
+      h5.textContent = data.task
       result.appendChild(h5)
+      fetchTasks()
     } else {
-      const newName = input.value;
-      fetch(`/api/people/${currentID}`, {
+      const [newName, newDescription, newTime] = [inputName.value, inputDescription.value, inputTime.value];
+      await fetch(`/api/tasks/${sessionStorage.getItem('taskNumber')}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({name: newName})
+        body: JSON.stringify({name: newName, description: newDescription, time: newTime})
       })
       fetchTasks()
-      editmode = false;
     }
     fetchTasks()
   } catch (err) {
     console.log(err)
     formAlert.textContent = err.response.data.msg
   }
-  input.value = ''
 })
+
 
 var currentID = '';
 
 function changeItem(item, name){
-  editmode = true
-  input.value = name
+  inputName.value = name
   currentID = item
 }
 

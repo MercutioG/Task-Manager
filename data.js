@@ -1,21 +1,21 @@
 const tasks = [
   {
     name: 'Eat Breakfast',
-    time: '7:30AM',
-    description: 'The most important meal of the day.',
+    time: '7:30',
+    description: '"Cereal is the worst way you can start your morning".',
     completed: false,
     id: 1
   },
   {
     name: 'Eat Lunch',
-    time: '12:30PM',
-    description: 'Going out to get lunch all by yourself you lonley idot.',
+    time: '12:30',
+    description: 'Going out to get lunch all by your lonley self L.',
     completed: false,
     id: 2
   },
   {
     name: 'Eat Dinner',
-    time: '6:30PM',
+    time: '18:30',
     description: 'Eat a microwave with your cat.',
     completed: false,
     id: 3

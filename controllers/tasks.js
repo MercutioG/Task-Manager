@@ -7,7 +7,7 @@ const readTask = (req, res) => {
 }
 
 //Post function for creating tasks
-var newID = tasks[tasks.length - 1].id
+var newID = tasks[tasks.length - 1].id + 1
 const createTask = (req, res) => {
   console.log(req.body)
   const {name, description, time} = req.body
@@ -19,25 +19,26 @@ const createTask = (req, res) => {
   res.status(201).json({success: true, data: [tasks]})
 }
 
-// //PUT function for updating tasks
-// let length = tasks.length + 1
-// const updateTask = (req, res) => {
-//   const {id} = req.params;
-//   const {name} = req.body;
-//   const task = tasks.find((task) => task.id === Number(id))
+//PUT function for updating tasks
+const updateTask = (req, res) => {
+  const {id} = req.params;
+  const {name, description, time} = req.body;
+  const task = tasks.find((task) => task.id === Number(id))
 
-//   if(!task){
-//     return res.json({success: false, data:[]})
-//   }
+  if(!task){
+    return res.json({success: false, data:[]})
+  }
 
-//   const newTask = tasks.map((task) => {
-//     if(task.id === Number(id)){
-//       task.name = name;
-//     }
-//     return task;
-//   })
-//   res.status(202).json({data: newTask, success: true})
-// }
+  const newTask = tasks.map((task) => {
+    if(task.id === Number(id)){
+      task.name = name;
+      task.description = description;
+      task.time = time;
+    }
+    return task;
+  })
+  res.status(202).json({data: newTask, success: true})
+}
 
 //DELETE function for delete tasks
 const deleteTask = (req, res) => {
@@ -54,5 +55,4 @@ const deleteTask = (req, res) => {
   res.status(202).json({data: tasks, success: true})
 }
 
-// module.exports = {createTask, readTask, updateTask, deleteTask}
-module.exports = {createTask, readTask, deleteTask}
+module.exports = {createTask, readTask, updateTask, deleteTask}
