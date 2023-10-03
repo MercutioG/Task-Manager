@@ -1,5 +1,5 @@
 let {tasks} = require('../data')
-console.log(tasks)
+console.log(tasks[tasks.length - 1].id)
 
 //Get function for all tasks
 const readTask = (req, res) => {
@@ -7,13 +7,14 @@ const readTask = (req, res) => {
 }
 
 //Post function for creating tasks
+var newID = tasks[tasks.length - 1].id
 const createTask = (req, res) => {
   console.log(req.body)
-  const {name} = req.body
-  if(!name){
+  const {name, description, time} = req.body
+  if(!name || !description || !time){
     return res.status(400).json({data:[], success: false, msg:'Mising Details'})
   }
-  let task = {id: length++, name:name}
+  let task = {id: newID, name:name, time:time, description:description, completed: false}
   tasks.push(task)
   res.status(201).json({success: true, data: [tasks]})
 }
@@ -54,4 +55,4 @@ const deleteTask = (req, res) => {
 }
 
 // module.exports = {createTask, readTask, updateTask, deleteTask}
-module.exports = {readTask, deleteTask}
+module.exports = {createTask, readTask, deleteTask}
