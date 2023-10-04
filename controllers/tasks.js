@@ -14,7 +14,7 @@ const createTask = (req, res) => {
   if(!name || !description || !time){
     return res.status(400).json({data:[], success: false, msg:'Mising Details'})
   }
-  let task = {id: newID, name:name, time:time, description:description, completed: false}
+  const task = {id: newID, name:name, time:time, description:description, completed: false}
   tasks.push(task)
   res.status(201).json({success: true, data: [tasks]})
 }

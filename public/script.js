@@ -47,32 +47,33 @@ function changeColor(checkValue) {
   }
 }
 
-btn.addEventListener('click', async (e) => {
-  e.preventDefault()
-  const [nameValue, descriptionValue, timeValue] = [inputName, inputDescription, inputTime]
-
-  try {
-    if(sessionStorage.getItem('taskNumber') === -1){
-      const {data} = await axios.post('/api/tasks', {name: nameValue, description: descriptionValue, time: timeValue})
-      const h5 = document.createElement('h5')
-      h5.textContent = data.task
-      result.appendChild(h5)
+if(window.location.pathname == '/create-panel.html'){
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault()
+    const [nameValue, descriptionValue, timeValue] = [inputName, inputDescription, inputTime]
+  
+    try {
+      if(sessionStorage.getItem('taskNumber') === -1){
+        const {data} = await axios.post('/api/tasks', {name: nameValue, description: descriptionValue, time: timeValue})
+        const h5 = document.createElement('h5')
+        h5.textContent = data.task
+        result.appendChild(h5)
+      } else {
+        const [newName, newDescription, newTime] = [inputName.value, inputDescription.value, inputTime.value];
+        await fetch(`/api/tasks/${sessionStorage.getItem('taskNumber')}`, {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({name: newName, description: newDescription, time: newTime})
+        })
+        fetchTasks()
+      }
       fetchTasks()
-    } else {
-      const [newName, newDescription, newTime] = [inputName.value, inputDescription.value, inputTime.value];
-      await fetch(`/api/tasks/${sessionStorage.getItem('taskNumber')}`, {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({name: newName, description: newDescription, time: newTime})
-      })
-      fetchTasks()
+    } catch (err) {
+      console.log(err)
+      formAlert.textContent = err.response.data.msg
     }
-    fetchTasks()
-  } catch (err) {
-    console.log(err)
-    formAlert.textContent = err.response.data.msg
-  }
-})
+  })
+}
 
 
 var currentID = '';
