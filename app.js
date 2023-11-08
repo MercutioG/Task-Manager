@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 const port = 5000;
 
 const tasks = require('./routes/controller');
 
+app.use(bodyParser.json())
 // Static
 app.use(express.static('./public'))
 // Parse Data

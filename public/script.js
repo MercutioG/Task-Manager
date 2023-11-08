@@ -53,19 +53,19 @@ if(window.location.pathname == '/create-panel.html'){
     const [nameValue, descriptionValue, timeValue] = [inputName, inputDescription, inputTime]
   
     try {
-      if(sessionStorage.getItem('taskNumber') === -1){
-        const {data} = await axios.post('/api/tasks', {name: nameValue, description: descriptionValue, time: timeValue})
-        const h5 = document.createElement('h5')
-        h5.textContent = data.task
-        result.appendChild(h5)
-      } else {
-        const [newName, newDescription, newTime] = [inputName.value, inputDescription.value, inputTime.value];
+      if(Number(sessionStorage.getItem('taskNumber')) > 0){
+        const [newName, newDescription, newTime] = [inputName, inputDescription, inputTime];
         await fetch(`/api/tasks/${sessionStorage.getItem('taskNumber')}`, {
           method: 'PUT',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({name: newName, description: newDescription, time: newTime})
+          body: JSON.stringify({name: newName.value, description: newDescription.value, time: newTime.value})
         })
         fetchTasks()
+      } else {
+        const {data} = await axios.post('/api/tasks', {name: nameValue.value, description: descriptionValue.value, time: timeValue.value})
+        const h5 = document.createElement('h5')
+        h5.textContent = data.task
+        result.appendChild(h5)
       }
       fetchTasks()
     } catch (err) {

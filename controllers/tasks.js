@@ -7,15 +7,15 @@ const readTask = (req, res) => {
 }
 
 //Post function for creating tasks
-var newID = tasks[tasks.length - 1].id + 1
 const createTask = (req, res) => {
-  console.log(req.body)
   const {name, description, time} = req.body
+  console.log(req.body)
   if(!name || !description || !time){
     return res.status(400).json({data:[], success: false, msg:'Mising Details'})
   }
-  const task = {id: newID, name:name, time:time, description:description, completed: false}
-  tasks.push(task)
+  const task = {id: tasks[tasks.length - 1].id + 1, name:name, time:time, description:description, completed: false}
+  tasks.push(task);
+  console.log(tasks)
   res.status(201).json({success: true, data: [tasks]})
 }
 
